@@ -31,7 +31,10 @@ while(True):
         for i in result:
             fetchlist.append(i)
         print(fetchlist)  
+
         
+        
+
 
     if choice==3:
         result=employees.find_one()  # prints only first data using find_one()
@@ -54,4 +57,24 @@ while(True):
         result=employees.find({},{"_id":0,"name":1})   # To print name only using find({},{"name":1}) 
         for i in result:
            fetchlist.append(i) 
-        print(fetchlist)        
+        print(fetchlist)   
+
+    if choice==7:
+            
+             #to search an employee using name
+
+
+        result=employees.find({"name":"nani"})  
+        for i in result:
+            fetchlist.append(i)
+        print(fetchlist)           
+
+    if choice==8:
+            
+             #to search an employee using name
+
+
+        result=employees.delete_many({"name":"nani"})  
+        """ for i in result:
+            fetchlist.append(i) """
+        print(fetchlist)           
