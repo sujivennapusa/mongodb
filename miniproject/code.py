@@ -19,30 +19,43 @@ try:
             dict1={"name":name,"address":address,"mobileno":mobileno,"emailid":emailid}
             phonelist.append(dict1)
     obj=Directory()
-    while(True):
-        print("WELCOME TO THE PHONEBOOK DIRECTORY")
-        print( "\nMAIN MENU\n")
-        print( "1. Add a new Contact:")
-        print( "2. Show all existing Contacts:")
-        print( "3. Search the existing Contact using name:")
-        print( "4. Search the existing Contact using number:")
-        print( "5. Delete the contact")
-        print( "6.Update the contact")
-        print( "7. Exit")
+    def validate(name,emailid):
+        valname=re.search("[A-Za-z]{0,25}$",name)
+        valemailid=re.search(r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b',emailid)
+    
+        if  valname and valemailid:
+            return True
+        else:
+            return False    
 
-        choice = int(input("Enter your choice: "))
+    while(True):
+        print("\n WELCOME TO THE PHONEBOOK DIRECTORY")
+        print( "\nMAIN MENU")
+        print("\n 1. Add a new Contact:")
+        print("\n 2. Show all existing Contacts:")
+        print("\n 3. Search the existing Contact using name:")
+        print("\n 4. Search the existing contact using number:")
+        print("\n 5. Delete the contact using number:")
+        print("\n 6. Update the contact address and mobile number using name:")
+        print("\n 7. Exit")
+        choice = int(input("\n Enter your choice: "))
+
+        
             
         #Adding contact
         if choice==1:
-
-            print("ADD NEW CONTACT")
-            name=input("Enter name:")
-            address=input("Enter address:")
-            mobileno=int(input("Enter mobile number:"))
-            emailid=input("Enter email id:")
-            contactDetails=obj.details(name,address,mobileno,emailid)
-            result=number_collection.insert_many(phonelist)
-            print(result.inserted_ids) 
+            name=input("\n Enter name:")
+            emailid=input("\n Enter email id:")
+        
+            if validate(name,emailid):
+                address=input("\n Enter address:")
+                mobileno=int(input("\n Enter mobile number:"))
+                contactDetails=obj.details(name,address,mobileno,emailid)
+                result=number_collection.insert_many(phonelist)
+                print(result.inserted_ids) 
+                print(result.inserted_ids) 
+                print(result.inserted_ids) 
+     
 
             # prints tha data in the form of api
 
@@ -56,8 +69,7 @@ try:
             # searching for contact using name
 
         if choice==3:
-
-            sname=input("enter name to search:")
+            sname=input("\n Enter name to search:")
             result=number_collection.find({"name":sname})
             for i in result:
                 fetchlist.append(i)
@@ -67,7 +79,7 @@ try:
             
         if choice==4:
 
-            snumber=int(input("enter number to search:"))
+            snumber=int(input("\n Enter number to search:"))
             result=number_collection.find({"mobileno":snumber})  
             for i in result:
                 fetchlist.append(i)
@@ -77,7 +89,7 @@ try:
 
         if choice==5:
 
-            del_contact=int(input("Enter the contact number to delete:"))
+            del_contact=int(input("\n Enter the contact number to delete:"))
             result=number_collection.delete_one({"mobileno":del_contact})
             print(fetchlist) 
 
@@ -85,16 +97,17 @@ try:
 
         if choice==6:
 
-            updname=input("Enter the name whose contact details to update:")
-            newaddress=input("Enter new address:")
-            newmobileno=int(input("Enter new mobile number:"))
+            updname=input("\n Enter the name whose contact details to update:")
+            newaddress=input("\n Enter new address:")
+            newmobileno=int(input("\n Enter new mobile number:"))
             result=number_collection.update_one({"name":updname},{"$set":{"address":newaddress,"mobileno":newmobileno}})
             print(fetchlist)  
 
         if choice==7:
-            print("Thank you for choosing phone directory !!")
-            print("Exit from the menu:")
+            print("\n Thankyou for choosing phone directory!!")
+            print("\n Exit from the menu:")
             break      
+    
 
 
 except:
