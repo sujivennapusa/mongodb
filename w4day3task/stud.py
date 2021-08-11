@@ -1,9 +1,11 @@
 import pymongo
+
 client=pymongo.MongoClient("mongodb://localhost:27017")
 mydatabase=client['CollegeDb']    #database
 collection_name=mydatabase['students'] 
-
 studentlist=[]
+
+fetchlist=[]
 
 while(True):
     print("1.Add student:")
@@ -29,20 +31,17 @@ while(True):
         result=collection_name.find({"name":name})
         for i in result:
             print(i)
-
+   
     if choice==4:
         roll=int(input("enter the rollno to be deleted"))
         collection_name.update_one({"roll":roll},{"$set":{"del_flag":1}})
 
     if choice==5:
-        result=collection_name.aggregate([{"$group": {"_id":"$name","no_of_students":{"$sum":1}}}])
+        result=collection_name.aggregate([{"$group": {"_id":"$branch","no_of_students":{"$sum":1}}}])
         for i in result:
             print(i)
 
-    if choice==3:
-        result=collection_name.update_one({"roll":23},{"$set":{"name":"venky"}})
-        print(result)
-
+    
 
 
     if choice==6:
