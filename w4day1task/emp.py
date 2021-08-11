@@ -63,15 +63,15 @@ while(True):
             
              #to search an employee using name
 
-
-        result=employees.find({"name":"nani"})  
+        sname=input("enter name to search:")
+        result=employees.find({"name":sname})  
         for i in result:
             fetchlist.append(i)
         print(fetchlist)           
 
     if choice==8:
             
-             #to search an employee using name
+             #to delete an employee using name
 
 
         result=employees.delete_many({"name":"nani"})  
